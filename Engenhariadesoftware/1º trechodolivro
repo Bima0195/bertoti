@@ -13,3 +13,10 @@ Unlike those more established engineering professions, current software engineer
 Aeronautical engineers must follow rigid guidelines and practices, because errors in their calculations can cause real damage; programming,
 on the whole, has traditionally not followed such rigorous practices. But, as software becomes more integrated into our lives, we must adopt 
 and rely on more rigorous engineering methods. We hope this book helps others see a path toward more reliable software practices.
+
+
+Comentario.
+
+Esse trecho do livro destaca a diferença entre "engenharia de software", "programação" e "ciência da computação", mostrando como o 
+desenvolvimento de software exige um olhar mais rigoroso.  A ideia central é que, assim como em outras áreas da engenharia, é fundamental
+adotar práticas mais estruturadas para criar sistemas mais confiáveis e sustentáveis. Com sua experiência acumulada ao longo dos anos, a Google pode trazer insights valiosos sobre como seguir esse caminho.
