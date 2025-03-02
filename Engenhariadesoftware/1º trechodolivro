@@ -1,3 +1,4 @@
+Atividade 01
 
 What precisely do we mean by software engineering? What distinguishes “software engineering” from “programming” or “computer science”? And
 why would Google have a unique perspective to add to the corpus of previous software engineering literature written over the past 50 years?
@@ -18,5 +19,58 @@ and rely on more rigorous engineering methods. We hope this book helps others se
 Comentario.
 
 Esse trecho do livro destaca a diferença entre "engenharia de software", "programação" e "ciência da computação", mostrando como o 
-desenvolvimento de software exige um olhar mais rigoroso.  A ideia central é que, assim como em outras áreas da engenharia, é fundamental
+desenvolvimento de software exige um olhar mais rigoroso.  A ideia central é que, assim como em outras áreas da engenharia, é fundamental]]
 adotar práticas mais estruturadas para criar sistemas mais confiáveis e sustentáveis. Com sua experiência acumulada ao longo dos anos, a Google pode trazer insights valiosos sobre como seguir esse caminho.
+
+>>-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Atividade 02
+"Programming Over Time
+We propose that “software engineering” encompasses not just the act of writing code, but all of the tools and processes an organization uses to build and maintain that code over time. What practices can a software organization introduce that will best keep its code valuable over the long term? How can engineers make a codebase more sustainable and the software engineering discipline itself more rigorous? We don’t have fundamental answers to these questions, but we hope that Google’s collective experience over the past two decades illuminates possible paths toward finding those answers.
+ 
+One key insight we share in this book is that software engineering can be thought of as “programming integrated over time.” What practices can we introduce to our code to make it sustainable—able to react to necessary change—over its life cycle, from conception to introduction to maintenance to deprecation?
+ 
+The book emphasizes three fundamental principles that we feel software organizations should keep in mind when designing, architecting, and writing their code:
+ 
+Time and Change
+How code will need to adapt over the length of its life
+ 
+Scale and Growth
+How an organization will need to adapt as it evolves
+ 
+Trade-offs and Costs
+How an organization makes decisions, based on the lessons of Time and Change and Scale and Growth"
+
+
+Comentario
+
+Esse trecho do livro traz uma visão ampla sobre engenharia de software, mostrando que vai muito além de simplesmente escrever código.
+A ideia principal é refletir sobre como o tempo e as mudanças impactam o desenvolvimento de software, destacando a importância de adotar práticas que garantam um código sustentável e valioso a longo prazo. 
+Com base em duas décadas de experiência da Google, o texto busca oferecer insights sobre como lidar com desafios como sustentabilidade e rigor na engenharia de software. 
+Em resumo, ele reforça a necessidade de considerar não só o código em si, mas também a evolução da organização e os desafios envolvidos nas decisões do desenvolvimento de software.
+
+
+>>-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Atividade 03 Tradeoff
+
+-> Desempenho vs. Manutenibilidade
+Um código altamente otimizado pode ser mais rápido, mas também mais difícil de entender e manter. Por outro lado, um código bem estruturado 
+e legível pode ser mais fácil de manter, mas pode não ter o melhor desempenho. Tempo de Desenvolvimento vs. Qualidade
+
+-> Tempo de Desenvolvimento vs. Qualidade
+Lançar um software rapidamente pode ser essencial para ganhar vantagem no mercado, mas
+pode resultar em mais bugs e necessidade de correções futuras. Por outro lado, investir mais
+tempo no desenvolvimento pode melhorar a qualidade, mas atrasar o lançamento.
+
+-> Segurança vs. Usabilidade
+Medidas de segurança mais rígidas, como autenticação em múltiplos fatores, tornam um sistema
+mais seguro, mas também podem dificultar a experiência do usuário. Se as barreiras forem
+muito altas, os usuários podem optar por soluções menos seguras, mas mais convenientes.
+
+>>-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Atividade 04 Diagrama UML 
+
+
+
