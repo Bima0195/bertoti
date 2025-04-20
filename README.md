@@ -74,7 +74,7 @@ mais seguro, mas também podem dificultar a experiência do usuário. Se as barr
 muito altas, os usuários podem optar por soluções menos seguras, mas mais convenientes.
 
 
-# Atividade 4 - UML Unified Modeling Language (linguagem de modelagem visual)
+# Atividade 04 - UML Unified Modeling Language (linguagem de modelagem visual)
 
 A UML possui diversos diagramas que servem para representar artefatos de sistemas orientados a objetos.
 
@@ -85,7 +85,7 @@ o sinal de (-) representa um método, que são funções ou procedimento que def
 ![Diagrma UML](https://github.com/user-attachments/assets/f33ac5f9-81e2-4dfb-8c38-2d329973df7f)
 
 
-# Projeto Java com JUnit testes
+# Atidade 05 Projeto Java com JUnit testes
 
 // importação das bibliotecas utilizadas
 import java.util.List;
