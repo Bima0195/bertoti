@@ -54,10 +54,165 @@ O **Composite** é um padrão estrutural que permite tratar objetos individuais 
 - **Diagrama UML**
   *(Espaço para imagem UML do Observer Pattern)*  
 - **Código**
-  *(Espaço para código Observer Pattern)*  
+ ```Java
+# 🍽️ Restaurante Composite
+
+Exemplo de implementação do padrão **Composite** aplicado a um restaurante.
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+// Interface comum para todos os componentes do menu
+interface ItemMenu {
+    void mostrarDescricao();
+    double calcularPreco();
+}
+
+// Classe Leaf — representa pratos individuais
+class Prato implements ItemMenu {
+    private String nome;
+    private double preco;
+
+    public Prato(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    @Override
+    public void mostrarDescricao() {
+        System.out.println("Prato: " + nome + " - R$" + preco);
+    }
+
+    @Override
+    public double calcularPreco() {
+        return preco;
+    }
+}
+
+// Classe Leaf — representa bebidas
+class Bebida implements ItemMenu {
+    private String nome;
+    private double preco;
+
+    public Bebida(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    @Override
+    public void mostrarDescricao() {
+        System.out.println("Bebida: " + nome + " - R$" + preco);
+    }
+
+    @Override
+    public double calcularPreco() {
+        return preco;
+    }
+}
+
+// Classe Composite — representa menus ou combos
+class Menu implements ItemMenu {
+    private String nome;
+    private List<ItemMenu> itens = new ArrayList<>();
+
+    public Menu(String nome) {
+        this.nome = nome;
+    }
+
+    public void adicionarItem(ItemMenu item) {
+        itens.add(item);
+    }
+
+    public void removerItem(ItemMenu item) {
+        itens.remove(item);
+    }
+
+    @Override
+    public void mostrarDescricao() {
+        System.out.println("Menu: " + nome);
+        for (ItemMenu item : itens) {
+            item.mostrarDescricao();
+        }
+    }
+
+    @Override
+    public double calcularPreco() {
+        double total = 0;
+        for (ItemMenu item : itens) {
+            total += item.calcularPreco();
+        }
+        return total;
+    }
+}
+
+// Classe principal para testar o padrão Composite
+public class RestauranteComposite {
+    public static void main(String[] args) {
+        Prato pizza = new Prato("Pizza Margherita", 35.0);
+        Bebida suco = new Bebida("Suco de Laranja", 8.0);
+
+        Menu comboAlmoco = new Menu("Combo Almoço");
+        comboAlmoco.adicionarItem(pizza);
+        comboAlmoco.adicionarItem(suco);
+
+        comboAlmoco.mostrarDescricao();
+        System.out.println("Preço total: R$" + comboAlmoco.calcularPreco());
+    }
+}
+```
 
 ### Anti-Pattern
 - **Diagrama UML**
   *(Espaço para imagem UML do Observer Anti-Pattern)*  
 - **Código**
-  *(Espaço para código Observer Anti-Pattern)*  
+```Java
+Este exemplo mostra uma implementação incorreta do padrão **Composite**, com lógica duplicada e acoplamento excessivo.
+
+```java
+// RestauranteAntiPattern.java
+// Exemplo de Anti-Pattern: uma única classe genérica faz tudo
+
+class ItemPedido {
+    String nome;
+    double preco;
+    String tipo; // "Prato", "Bebida", "Menu"
+
+    void mostrarDescricao() {
+        System.out.println(tipo + ": " + nome + " - R$" + preco);
+    }
+
+    double calcularPreco() {
+        return preco;
+    }
+
+    // Métodos que não fazem sentido para todos os tipos
+    void adicionarItem(ItemPedido p) {
+        System.out.println("Adicionando item (mesmo se não for menu)");
+    }
+
+    void removerItem(ItemPedido p) {
+        System.out.println("Removendo item (mesmo se não for menu)");
+    }
+}
+
+// Subclasses repetem atributos e lógica
+class Prato extends ItemPedido {
+    void fazerPedidoEspecial() {
+        System.out.println("Pedido especial para prato.");
+    }
+}
+
+class Bebida extends ItemPedido {
+    void prepararBebida() {
+        System.out.println("Preparando bebida.");
+    }
+}
+
+class Menu extends ItemPedido {
+    void montarCombo() {
+        System.out.println("Montando combo.");
+    }
+}
+
+```
