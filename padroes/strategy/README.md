@@ -472,3 +472,357 @@ public class ItemPedido {
 - Alta complexidade.
 - Violação do princípio da responsabilidade única.
 - Difícil manutenção.
+
+---
+
+# 💻 Implementação – LojaInteligenteMVC
+
+## Main.java
+
+```java
+package application;
+
+import controller.LojaController;
+
+public class Main {
+
+    public static void main(String[] args) {
+        LojaController controller = new LojaController();
+        controller.executar();
+    }
+}
+```
+
+---
+
+## Strategy
+
+### Pagamento.java
+
+```java
+package model.strategy;
+
+public interface Pagamento {
+    void pagar(double valor);
+}
+```
+
+### Pix.java
+
+```java
+package model.strategy;
+
+public class Pix implements Pagamento {
+
+    @Override
+    public void pagar(double valor) {
+        System.out.println("Pagamento realizado via PIX");
+        System.out.println("Valor pago: R$ " + valor);
+    }
+}
+```
+
+### Checkout.java
+
+```java
+package model.strategy;
+
+public class Checkout {
+
+    private Pagamento pagamento;
+
+    public Checkout(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public void realizarPagamento(double valor) {
+        pagamento.pagar(valor);
+    }
+}
+```
+
+---
+
+## Observer
+
+### Observer.java
+
+```java
+package model.observer;
+
+public interface Observer {
+
+    void update(String produto, double preco);
+}
+```
+
+### Cliente.java
+
+```java
+package model.observer;
+
+public class Cliente implements Observer {
+
+    private String nome;
+
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public void update(String produto, double preco) {
+
+        System.out.println(nome + " recebeu atualização:");
+        System.out.println(produto +
+                " agora custa R$ " + preco);
+    }
+}
+```
+
+### Produto.java
+
+```java
+package model.observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Produto {
+
+    private String nome;
+    private double preco;
+
+    private List<Observer> observers =
+            new ArrayList<>();
+
+    public Produto(String nome, double preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    public void adicionarObserver(
+            Observer observer) {
+
+        observers.add(observer);
+    }
+
+    public void removerObserver(
+            Observer observer) {
+
+        observers.remove(observer);
+    }
+
+    public void notificarObservers() {
+
+        for (Observer observer : observers) {
+            observer.update(nome, preco);
+        }
+    }
+
+    public void setPreco(double preco) {
+
+        this.preco = preco;
+        notificarObservers();
+    }
+}
+```
+
+---
+
+## Composite
+
+### ItemLoja.java
+
+```java
+package model.composite;
+
+public interface ItemLoja {
+
+    void mostrar();
+
+    double getPreco();
+}
+```
+
+### ProdutoItem.java
+
+```java
+package model.composite;
+
+public class ProdutoItem implements ItemLoja {
+
+    private String nome;
+    private double preco;
+
+    public ProdutoItem(
+            String nome,
+            double preco) {
+
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    @Override
+    public void mostrar() {
+
+        System.out.println(
+                nome + " - R$ " + preco);
+    }
+
+    @Override
+    public double getPreco() {
+        return preco;
+    }
+}
+```
+
+### Combo.java
+
+```java
+package model.composite;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Combo implements ItemLoja {
+
+    private String nome;
+
+    private List<ItemLoja> itens =
+            new ArrayList<>();
+
+    public Combo(String nome) {
+        this.nome = nome;
+    }
+
+    public void adicionar(ItemLoja item) {
+        itens.add(item);
+    }
+
+    public void remover(ItemLoja item) {
+        itens.remove(item);
+    }
+
+    @Override
+    public void mostrar() {
+
+        System.out.println(nome);
+
+        for(ItemLoja item : itens) {
+            item.mostrar();
+        }
+    }
+
+    @Override
+    public double getPreco() {
+
+        double total = 0;
+
+        for(ItemLoja item : itens) {
+            total += item.getPreco();
+        }
+
+        return total;
+    }
+}
+```
+
+---
+
+## LojaController.java
+
+```java
+package controller;
+
+import model.composite.Combo;
+import model.composite.ProdutoItem;
+import model.observer.Cliente;
+import model.observer.Produto;
+import model.strategy.Checkout;
+import model.strategy.Pix;
+
+public class LojaController {
+
+    public void executar() {
+
+        Produto produto =
+                new Produto(
+                        "Notebook Gamer",
+                        4500.0);
+
+        Cliente joao =
+                new Cliente("João");
+
+        Cliente maria =
+                new Cliente("Maria");
+
+        produto.adicionarObserver(joao);
+        produto.adicionarObserver(maria);
+
+        produto.setPreco(3500.0);
+
+        ProdutoItem notebook =
+                new ProdutoItem(
+                        "Notebook Gamer",
+                        3500.0);
+
+        ProdutoItem mouse =
+                new ProdutoItem(
+                        "Mouse Gamer",
+                        150.0);
+
+        ProdutoItem teclado =
+                new ProdutoItem(
+                        "Teclado Mecânico",
+                        200.0);
+
+        Combo combo =
+                new Combo("Combo Gamer");
+
+        combo.adicionar(notebook);
+        combo.adicionar(mouse);
+        combo.adicionar(teclado);
+
+        combo.mostrar();
+
+        double total = combo.getPreco();
+
+        Checkout checkout =
+                new Checkout(new Pix());
+
+        checkout.realizarPagamento(total);
+    }
+}
+```
+
+---
+
+## Resultado
+
+```text
+===== OBSERVER =====
+
+Notebook Gamer entrou em promoção
+
+João recebeu atualização:
+Notebook Gamer agora custa R$ 3500.0
+
+Maria recebeu atualização:
+Notebook Gamer agora custa R$ 3500.0
+
+===== COMPOSITE =====
+
+Combo Gamer
+
+Notebook Gamer - R$ 3500.0
+Mouse Gamer - R$ 150.0
+Teclado Mecânico - R$ 200.0
+
+Total do Combo: R$ 3850.0
+
+===== STRATEGY =====
+
+Pagamento realizado via PIX
+
+Valor pago: R$ 3850.0
+```
