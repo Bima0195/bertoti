@@ -1,0 +1,2 @@
+package entities;
+public class ItemPedido { protected String nome; protected double preco; protected String tipo; public void adicionarItem(ItemPedido i){} public double calcularPreco(){return preco;} }

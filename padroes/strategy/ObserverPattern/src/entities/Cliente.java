@@ -1,0 +1,2 @@
+package entities;
+public class Cliente implements Observador { private String nome; public Cliente(String nome){this.nome=nome;} public void update(double preco){ System.out.println(nome+" recebeu: R$"+preco);} }

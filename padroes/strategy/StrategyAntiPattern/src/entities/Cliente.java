@@ -1,0 +1,2 @@
+package entities;
+public class Cliente { private String tipo; public Cliente(String tipo){this.tipo=tipo;} public void emprestimo(){ if(tipo.equals("ESTUDANTE")) System.out.println("Estudantil"); else if(tipo.equals("EMPRESA")) System.out.println("Empresarial"); }}

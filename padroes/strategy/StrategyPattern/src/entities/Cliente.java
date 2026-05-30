@@ -1,0 +1,2 @@
+package entities;
+public class Cliente { private String nome; private Emprestimo emprestimo; public Cliente(String nome, Emprestimo emprestimo){this.nome=nome;this.emprestimo=emprestimo;} public void emprestar(){System.out.println(emprestimo.emprestimo());}}
