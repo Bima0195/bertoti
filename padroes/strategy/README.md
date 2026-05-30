@@ -1,4 +1,4 @@
-# 🎨 Design Patterns e Anti-Patterns
+    # 🎨 Design Patterns e Anti-Patterns
 
 Este repositório apresenta exemplos de **Design Patterns** e seus respectivos **Anti-Patterns**, destacando boas práticas e más práticas de implementação em sistemas orientados a objetos.
 
@@ -18,7 +18,8 @@ Neste exemplo, cada tipo de cliente possui uma estratégia diferente para realiz
 
 ### Diagrama UML
 
-*(Inserir imagem UML Strategy Pattern)*
+<img width="1588" height="568" alt="Strategy" src="https://github.com/user-attachments/assets/162ac3ee-6fee-4dba-a39d-e8288c15783d" />
+
 
 ### Descrição
 
@@ -102,7 +103,8 @@ public class Aposentado implements Emprestimo {
 
 ### Diagrama UML
 
-*(Inserir imagem UML Strategy Anti-Pattern)*
+<img width="823" height="432" alt="Observer" src="https://github.com/user-attachments/assets/f00957b6-522f-4d3f-a191-dcafcb8910d9" />
+
 
 ### Descrição
 
@@ -165,7 +167,10 @@ Neste exemplo, clientes recebem notificações quando o preço de um produto é 
 
 ### Diagrama UML
 
-*(Inserir imagem UML Observer Pattern)*
+<img width="823" height="432" alt="Observer" src="https://github.com/user-attachments/assets/764e885e-e355-44ba-ae16-694f135c103f" />
+
+
+
 
 ### Descrição
 
@@ -243,7 +248,8 @@ public class Produto {
 
 ### Diagrama UML
 
-*(Inserir imagem UML Observer Anti-Pattern)*
+<img width="723" height="491" alt="AntiObserver" src="https://github.com/user-attachments/assets/25bb9430-4b0b-44de-97db-5d4d6e0e6df1" />
+
 
 ### Descrição
 
@@ -299,7 +305,8 @@ Neste exemplo, pratos, bebidas e menus podem ser manipulados através da mesma i
 
 ### Diagrama UML
 
-*(Inserir imagem UML Composite Pattern)*
+<img width="891" height="606" alt="Composite" src="https://github.com/user-attachments/assets/e6d3f837-50ff-4203-a2d2-c7fbf5e9d064" />
+
 
 ### Descrição
 
@@ -415,7 +422,8 @@ public class Menu implements Componente {
 
 ### Diagrama UML
 
-*(Inserir imagem UML Composite Anti-Pattern)*
+<img width="1117" height="606" alt="AntComposite" src="https://github.com/user-attachments/assets/bb82feae-a88c-485c-957b-5f50e0a42fa1" />
+
 
 ### Descrição
 
