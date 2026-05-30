@@ -4,88 +4,139 @@ Este repositório apresenta exemplos de **Design Patterns** e seus respectivos *
 
 ---
 
-# 📌 Strategy
+# 📌 Strategy – Sistema de Empréstimos
 
-O **Strategy** é um padrão comportamental que permite definir uma família de algoritmos, encapsulá-los e torná-los intercambiáveis. Ele separa o comportamento do contexto, facilitando a extensão e manutenção do código.
+O padrão **Strategy** permite encapsular diferentes algoritmos ou comportamentos em classes separadas, tornando-os intercambiáveis sem alterar o código do cliente.
+
+Neste exemplo, cada tipo de cliente possui uma estratégia diferente para realizar empréstimos.
 
 🔗 Referência: https://refactoring.guru/pt-br/design-patterns/strategy
 
+---
+
 ## ✅ Pattern
 
 ### Diagrama UML
-*(Espaço para imagem UML do Strategy Pattern)*
+
+*(Inserir imagem UML Strategy Pattern)*
+
+### Descrição
+
+A classe `Cliente` utiliza a interface `Emprestimo` para delegar o comportamento de empréstimo. Assim, novos tipos de empréstimo podem ser adicionados sem alterar a classe principal.
 
 ### Código
 
 ```java
-// Interface Strategy
-interface PagamentoStrategy {
-    void pagar(double valor);
+public interface Emprestimo {
+    String emprestimo();
 }
+```
 
-// Estratégias concretas
-class CartaoCredito implements PagamentoStrategy {
-    @Override
-    public void pagar(double valor) {
-        System.out.println("Pagamento de R$" + valor + " no cartão.");
-    }
-}
+```java
+public class Cliente {
 
-class Pix implements PagamentoStrategy {
-    @Override
-    public void pagar(double valor) {
-        System.out.println("Pagamento de R$" + valor + " via PIX.");
-    }
-}
+    private String nome;
+    private Emprestimo emprestimo;
 
-// Context
-class Carrinho {
-    private PagamentoStrategy estrategia;
-
-    public void setEstrategia(PagamentoStrategy estrategia) {
-        this.estrategia = estrategia;
+    public Cliente(String nome, Emprestimo emprestimo) {
+        this.nome = nome;
+        this.emprestimo = emprestimo;
     }
 
-    public void finalizarCompra(double valor) {
-        estrategia.pagar(valor);
-    }
-}
-
-public class StrategyPattern {
-    public static void main(String[] args) {
-        Carrinho carrinho = new Carrinho();
-
-        carrinho.setEstrategia(new Pix());
-        carrinho.finalizarCompra(100);
-
-        carrinho.setEstrategia(new CartaoCredito());
-        carrinho.finalizarCompra(200);
+    public void emprestar() {
+        System.out.println(emprestimo.emprestimo());
     }
 }
 ```
 
+```java
+public class ClienteComum implements Emprestimo {
+
+    @Override
+    public String emprestimo() {
+        return "Empréstimo com juros padrão";
+    }
+}
+```
+
+```java
+public class Estudante implements Emprestimo {
+
+    @Override
+    public String emprestimo() {
+        return "Empréstimo estudantil";
+    }
+}
+```
+
+```java
+public class Empresa implements Emprestimo {
+
+    @Override
+    public String emprestimo() {
+        return "Empréstimo empresarial";
+    }
+}
+```
+
+```java
+public class Aposentado implements Emprestimo {
+
+    @Override
+    public String emprestimo() {
+        return "Empréstimo consignado";
+    }
+}
+```
+
+### Vantagens
+
+- Baixo acoplamento.
+- Fácil manutenção.
+- Segue Open/Closed Principle.
+- Novas estratégias podem ser adicionadas sem alterar código existente.
+
+---
+
 ## ❌ Anti-Pattern
 
 ### Diagrama UML
-*(Espaço para imagem UML do Strategy Anti-Pattern)*
+
+*(Inserir imagem UML Strategy Anti-Pattern)*
+
+### Descrição
+
+Toda a lógica de empréstimo fica centralizada na classe Cliente através de condicionais.
 
 ### Código
 
 ```java
-class Carrinho {
+public class Cliente {
 
-    public void finalizarCompra(String tipoPagamento, double valor) {
+    private String nome;
+    private String tipo;
 
-        if(tipoPagamento.equals("PIX")) {
-            System.out.println("Pagamento de R$" + valor + " via PIX");
+    public Cliente(String nome, String tipo) {
+        this.nome = nome;
+        this.tipo = tipo;
+    }
+
+    public void emprestimo() {
+
+        if(tipo.equals("COMUM")) {
+            System.out.println("Empréstimo comum");
         }
 
-        else if(tipoPagamento.equals("CARTAO")) {
-            System.out.println("Pagamento de R$" + valor + " no cartão");
+        else if(tipo.equals("ESTUDANTE")) {
+            System.out.println("Empréstimo estudantil");
         }
 
-        else if(tipoPagamento.equals("BOLETO")) {
-            System.out.println("Pagamento de R$" + valor + " via boleto");
+        else if(tipo.equals("EMPRESA")) {
+            System.out.println("Empréstimo empresarial");
+        }
+
+        else if(tipo.equals("APOSENTADO")) {
+            System.out.println("Empréstimo consignado");
         }
     }
 }
@@ -93,210 +144,256 @@ class Carrinho {
 
 ### Problemas
 
-- Uso excessivo de `if/else`.
-- Violação do princípio Open/Closed.
-- Necessário alterar a classe sempre que surgir uma nova forma de pagamento.
+- Muitos if/else.
 - Alto acoplamento.
+- Difícil manutenção.
+- Violação do princípio Open/Closed.
 
 ---
 
-# 📌 Observer
+# 📌 Observer – Monitoramento de Preço de Produto
 
-O **Observer** é um padrão comportamental que define uma dependência um-para-muitos entre objetos, de forma que quando um objeto muda de estado, todos os seus dependentes são notificados automaticamente.
+O padrão **Observer** permite que diversos objetos sejam notificados automaticamente quando ocorrer uma alteração em outro objeto.
+
+Neste exemplo, clientes recebem notificações quando o preço de um produto é alterado.
 
 🔗 Referência: https://refactoring.guru/pt-br/design-patterns/observer
 
+---
+
 ## ✅ Pattern
 
 ### Diagrama UML
-*(Espaço para imagem UML do Observer Pattern)*
+
+*(Inserir imagem UML Observer Pattern)*
+
+### Descrição
+
+O produto mantém uma lista de observadores e notifica todos quando o preço é alterado.
 
 ### Código
+
+```java
+public interface Observador {
+    void update(double preco);
+}
+```
+
+```java
+public class Cliente implements Observador {
+
+    private String nome;
+
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public void update(double preco) {
+        System.out.println(nome +
+                " recebeu atualização de preço: R$ " + preco);
+    }
+}
+```
 
 ```java
 import java.util.ArrayList;
 import java.util.List;
 
-interface Observer {
-    void atualizar(String noticia);
-}
+public class Produto {
 
-class Assinante implements Observer {
+    private double preco;
 
-    private String nome;
+    private List<Observador> observadores =
+            new ArrayList<>();
 
-    public Assinante(String nome) {
-        this.nome = nome;
+    public void adicionarObservador(
+            Observador observador) {
+
+        observadores.add(observador);
     }
 
-    @Override
-    public void atualizar(String noticia) {
-        System.out.println(nome + " recebeu: " + noticia);
-    }
-}
+    public void setPreco(double preco) {
 
-class Jornal {
+        this.preco = preco;
 
-    private List<Observer> assinantes = new ArrayList<>();
-
-    public void adicionar(Observer observer) {
-        assinantes.add(observer);
+        notificarObservadores();
     }
 
-    public void publicarNoticia(String noticia) {
-        for(Observer observer : assinantes) {
-            observer.atualizar(noticia);
+    private void notificarObservadores() {
+
+        for(Observador observador : observadores) {
+
+            observador.update(preco);
         }
-    }
-}
-
-public class ObserverPattern {
-
-    public static void main(String[] args) {
-
-        Jornal jornal = new Jornal();
-
-        jornal.adicionar(new Assinante("João"));
-        jornal.adicionar(new Assinante("Maria"));
-
-        jornal.publicarNoticia("Nova edição disponível!");
     }
 }
 ```
 
+### Vantagens
+
+- Desacoplamento.
+- Fácil expansão.
+- Comunicação automática.
+- Escalável.
+
+---
+
 ## ❌ Anti-Pattern
 
 ### Diagrama UML
-*(Espaço para imagem UML do Observer Anti-Pattern)*
+
+*(Inserir imagem UML Observer Anti-Pattern)*
+
+### Descrição
+
+O produto possui referências diretas para cada cliente.
 
 ### Código
 
 ```java
-class Jornal {
+public class Produto {
 
-    private ClienteEmail cliente1;
-    private ClienteEmail cliente2;
+    private double preco;
 
-    public Jornal(ClienteEmail cliente1, ClienteEmail cliente2) {
-        this.cliente1 = cliente1;
-        this.cliente2 = cliente2;
+    private Cliente1 cliente1;
+    private Cliente2 cliente2;
+    private Cliente3 cliente3;
+
+    public void setPreco(double preco) {
+
+        this.preco = preco;
+
+        avisarClientes();
     }
 
-    public void publicarNoticia(String noticia) {
+    private void avisarClientes() {
 
-        cliente1.receberEmail(noticia);
-        cliente2.receberEmail(noticia);
-    }
-}
-
-class ClienteEmail {
-
-    public void receberEmail(String noticia) {
-        System.out.println("Recebeu: " + noticia);
+        cliente1.update();
+        cliente2.update();
+        cliente3.update();
     }
 }
 ```
 
 ### Problemas
 
-- Dependência direta dos destinatários.
+- Dependência direta dos clientes.
+- Pouca flexibilidade.
 - Difícil adicionar novos observadores.
-- Alto acoplamento.
-- Baixa escalabilidade.
+- Forte acoplamento.
 
 ---
 
-# 📌 Composite
+# 📌 Composite – Restaurante
 
-O **Composite** é um padrão estrutural que permite tratar objetos individuais e composições de objetos de maneira uniforme. Ele é útil para representar hierarquias de árvores, como menus ou estruturas de arquivos.
+O padrão **Composite** permite tratar objetos individuais e grupos de objetos de maneira uniforme.
+
+Neste exemplo, pratos, bebidas e menus podem ser manipulados através da mesma interface.
 
 🔗 Referência: https://refactoring.guru/pt-br/design-patterns/composite
+
+---
 
 ## ✅ Pattern
 
 ### Diagrama UML
-*(Espaço para imagem UML do Composite Pattern)*
+
+*(Inserir imagem UML Composite Pattern)*
+
+### Descrição
+
+Pratos e bebidas são objetos simples (Leaf). Menus e combos são objetos compostos (Composite).
 
 ### Código
+
+```java
+public interface Componente {
+
+    String mostrarDescricao();
+
+    double calcularPreco();
+}
+```
+
+```java
+public class Prato implements Componente {
+
+    private String nome;
+    private double preco;
+
+    @Override
+    public String mostrarDescricao() {
+        return nome;
+    }
+
+    @Override
+    public double calcularPreco() {
+        return preco;
+    }
+}
+```
+
+```java
+public class Bebida implements Componente {
+
+    private String nome;
+    private double preco;
+
+    @Override
+    public String mostrarDescricao() {
+        return nome;
+    }
+
+    @Override
+    public double calcularPreco() {
+        return preco;
+    }
+}
+```
 
 ```java
 import java.util.ArrayList;
 import java.util.List;
 
-interface ItemMenu {
-    void mostrarDescricao();
-    double calcularPreco();
-}
+public class Menu implements Componente {
 
-class Prato implements ItemMenu {
+    private List<Componente> itens =
+            new ArrayList<>();
 
-    private String nome;
-    private double preco;
+    public void adicionarItem(
+            Componente componente) {
 
-    public Prato(String nome, double preco) {
-        this.nome = nome;
-        this.preco = preco;
+        itens.add(componente);
+    }
+
+    public void removerItem(
+            Componente componente) {
+
+        itens.remove(componente);
     }
 
     @Override
-    public void mostrarDescricao() {
-        System.out.println("Prato: " + nome + " - R$" + preco);
-    }
+    public String mostrarDescricao() {
 
-    @Override
-    public double calcularPreco() {
-        return preco;
-    }
-}
+        String descricao = "";
 
-class Bebida implements ItemMenu {
+        for(Componente item : itens) {
 
-    private String nome;
-    private double preco;
-
-    public Bebida(String nome, double preco) {
-        this.nome = nome;
-        this.preco = preco;
-    }
-
-    @Override
-    public void mostrarDescricao() {
-        System.out.println("Bebida: " + nome + " - R$" + preco);
-    }
-
-    @Override
-    public double calcularPreco() {
-        return preco;
-    }
-}
-
-class Menu implements ItemMenu {
-
-    private String nome;
-    private List<ItemMenu> itens = new ArrayList<>();
-
-    public Menu(String nome) {
-        this.nome = nome;
-    }
-
-    public void adicionarItem(ItemMenu item) {
-        itens.add(item);
-    }
-
-    @Override
-    public void mostrarDescricao() {
-        System.out.println("Menu: " + nome);
-
-        for(ItemMenu item : itens) {
-            item.mostrarDescricao();
+            descricao += item.mostrarDescricao()
+                    + "\n";
         }
+
+        return descricao;
     }
 
     @Override
     public double calcularPreco() {
+
         double total = 0;
 
-        for(ItemMenu item : itens) {
+        for(Componente item : itens) {
+
             total += item.calcularPreco();
         }
 
@@ -305,40 +402,58 @@ class Menu implements ItemMenu {
 }
 ```
 
+### Vantagens
+
+- Tratamento uniforme.
+- Fácil expansão.
+- Baixo acoplamento.
+- Estruturas hierárquicas organizadas.
+
+---
+
 ## ❌ Anti-Pattern
 
 ### Diagrama UML
-*(Espaço para imagem UML do Composite Anti-Pattern)*
+
+*(Inserir imagem UML Composite Anti-Pattern)*
+
+### Descrição
+
+Uma única classe tenta representar pratos, bebidas e menus ao mesmo tempo.
 
 ### Código
 
 ```java
-class ItemPedido {
+public class ItemPedido {
 
-    String nome;
-    double preco;
-    String tipo;
+    private String nome;
+    private double preco;
+    private String tipo;
 
-    void mostrarDescricao() {
-        System.out.println(tipo + ": " + nome);
+    public void adicionarItem(
+            ItemPedido item) {
+
+        System.out.println(
+                "Adicionando item...");
     }
 
-    void adicionarItem(ItemPedido item) {
-        System.out.println("Adicionando item...");
+    public void removerItem(
+            ItemPedido item) {
+
+        System.out.println(
+                "Removendo item...");
     }
 
-    void removerItem(ItemPedido item) {
-        System.out.println("Removendo item...");
+    public void mostrarDescricao() {
+
+        System.out.println(
+                tipo + " - " + nome);
     }
-}
 
-class Prato extends ItemPedido {
-}
+    public double calcularPreco() {
 
-class Bebida extends ItemPedido {
-}
-
-class Menu extends ItemPedido {
+        return preco;
+    }
 }
 ```
 
@@ -346,8 +461,6 @@ class Menu extends ItemPedido {
 
 - Classe genérica faz tudo.
 - Métodos sem sentido para alguns objetos.
-- Lógica duplicada.
+- Alta complexidade.
 - Violação do princípio da responsabilidade única.
-- Difícil manutenção e evolução do sistema.
-
----
+- Difícil manutenção.
